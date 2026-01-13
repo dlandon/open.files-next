@@ -97,7 +97,7 @@ $(function() {
 
 	/* Check for a plugin update and show banner. */
 	if ( typeof caPluginUpdateCheck === "function" ) {
-		caPluginUpdateCheck("open.files.plg");
+		caPluginUpdateCheck("open.files-next.plg");
 	}
 });
 
