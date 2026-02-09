@@ -41,8 +41,10 @@ require_once(DOCROOT."/webGui/include/Helpers.php");
 </table>
 
 <p><strong>_(Notes)_:</strong></p>
-<li>_(An entry for 'bash' means you have a terminal session open with the working directory on the array)_.</li>
-<li>_(If 'smbd' is listed, it means that another computer has a samba share mounted)_. _(Files open by Samba usually won't prevent array shutdown)_.</li>
+<ul>
+	<li>_(An entry for 'bash' means you have a terminal session open with the working directory on the array)_.</li>
+	<li>_(If 'smbd' is listed, it means that another computer has a samba share mounted)_. _(Files open by Samba usually won't prevent array shutdown)_.</li>
+</ul>
 
 :open_files_help_plug:
 > Click on the **Kill** button to stop the process that is holding the files open.
