@@ -3,13 +3,13 @@
 <!ENTITY name		"open.files-next">
 <!ENTITY plugin		"open.files">
 <!ENTITY author		"dlandon">
-<!ENTITY version	"2026.01.13">
+<!ENTITY version	"2026.02.09">
 <!ENTITY launch		"Tools/OpenFiles">
 <!ENTITY gitURL		"https://raw.githubusercontent.com/&author;/&name;/master">
 <!ENTITY tgzURL		"https://raw.githubusercontent.com/&author;/&name;/v&version;">
 <!ENTITY pluginURL	"&gitURL;/&name;.plg">
 <!ENTITY supportURL	"https://github.com/dlandon/&name;/discussions">
-<!ENTITY MD5		"baf33038bed5b3ca4f64cbb0e175c5a0">
+<!ENTITY MD5		"1363d0e6d6211273721112d5c951c607">
 ]>
 
 <PLUGIN	name="&plugin;"
@@ -24,6 +24,9 @@
 <CHANGES>
 ##&name;
 ###&version;
+- Fix: Notes listing format.
+
+###2026.01.13
 - Fix: Update check for open files next.
 
 ###2025.12.27
