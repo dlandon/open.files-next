@@ -2,7 +2,7 @@
 
 This plugin adds the ability to monitor processes that have open files that might keep the aray from shutting down cleanly.  You can kill any processes that have open files preventing array shutdown.  This plugin only works on V6.1 and later versions of Unraid.
 
-# Installing Open Files (Next)
+### Installing Open Files (Next)
 
 To install this plugin manually, enter either of the URLs below in the Enter URL field of the Plugins page.  The URL below will either install the latest or a specific version you choose.
 
