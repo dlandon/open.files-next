@@ -3,13 +3,13 @@
 <!ENTITY name		"open.files-next">
 <!ENTITY plugin		"open.files">
 <!ENTITY author		"dlandon">
-<!ENTITY version	"2026.02.09">
+<!ENTITY version	"2026.03.22">
 <!ENTITY launch		"Tools/OpenFiles">
 <!ENTITY gitURL		"https://raw.githubusercontent.com/&author;/&name;/master">
 <!ENTITY tgzURL		"https://raw.githubusercontent.com/&author;/&name;/v&version;">
 <!ENTITY pluginURL	"&gitURL;/&name;.plg">
 <!ENTITY supportURL	"https://github.com/dlandon/&name;/discussions">
-<!ENTITY MD5		"1363d0e6d6211273721112d5c951c607">
+<!ENTITY MD5		"f713576d3b468d395f1a4584dfb8b41b">
 ]>
 
 <PLUGIN	name="&plugin;"
@@ -24,6 +24,9 @@
 <CHANGES>
 ##&name;
 ###&version;
+- Fix: Align plugin name with other Next plugins.
+
+###2026.02.09
 - Fix: Notes listing format.
 
 ###2026.01.13
@@ -33,7 +36,7 @@
 - Fix: URL reference so the plugin will update.
 
 ###2025.12.05
-- First release as Open Files (Next).
+- First release as Open Files - Next.
 </CHANGES>
 
 <!--
@@ -65,7 +68,7 @@ echo ""
 echo " The previous Open Files plugin is installed."
 echo ""
 echo " You must uninstall the Open Files plugin"
-echo " before installing Open Files (Next)."
+echo " before installing Open Files - Next."
 echo ""
 echo "-----------------------------------------------------------"
 echo ""
