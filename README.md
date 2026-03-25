@@ -22,3 +22,10 @@ Enter the release date "YYYY.MM.DD" of the specific version you want to install.
 
 **Note:** The URL must begin with `https://raw.githubusercontent.com/`. GitHub page URLs (`github.com/.../blob/...`) will not install correctly.
 
+### Support Development
+
+If this plugin has been useful to you and you'd like to support ongoing development, you can optionally make a donation:
+
+[Donate via PayPal](https://www.paypal.com/us/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EJGPC7B5CS66E)
+
+Support is appreciated, but never expected.
