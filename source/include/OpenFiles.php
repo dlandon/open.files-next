@@ -32,7 +32,7 @@ switch ($_POST['action']) {
 		$time		+= microtime(true);
 
 		if ($time < $timeout) {
-			$res1 = isset($res) ? explode("\n", $res) : array();
+			$res1 = isset($res) ? explode("\n", $res) : [];
 			$blocked = false;
 			$bcount = 0;
 			$process = 0;
