@@ -23,19 +23,36 @@ require_once(DOCROOT."/webGui/include/Helpers.php");
 /* Get translations. */
 require_once(DOCROOT."/webGui/include/Translations.php");
 
+/* Read process start time to distinguish a PID from any later reuse. */
+function get_process_start_time(int $pid): ?string {
+	$stat = @file_get_contents("/proc/$pid/stat");
+	$end = ($stat === false) ? false : strrpos($stat, ')');
+	$start_time = null;
+
+	if ($end !== false) {
+		$fields = preg_split('/\s+/', trim(substr($stat, $end + 1)));
+		if (isset($fields[19]) && ctype_digit($fields[19])) {
+			$start_time = $fields[19];
+		}
+	}
+
+	return $start_time;
+}
+
 switch ($_POST['action']) {
 	case 'open_files':
 		/* cd to /tmp or else lsof itself will show up as working dir on websserver home. */
 		$timeout	= 30;
 		$time		= -microtime(true); 
-		$res		= shell_exec("/usr/bin/timeout ".escapeshellarg($timeout)." "."cd /tmp;/usr/bin/lsof -F facn /mnt/* /dev/loop* /dev/md* 2>/dev/null");
+		$res		= shell_exec("cd /tmp && /usr/bin/timeout ".escapeshellarg($timeout)." /usr/bin/lsof -F facn /mnt/* /dev/loop* /dev/md* 2>/dev/null");
 		$time		+= microtime(true);
 
 		if ($time < $timeout) {
-			$res1 = isset($res) ? explode("\n", $res) : [];
-			$blocked = false;
-			$bcount = 0;
-			$process = 0;
+			$res1		= isset($res) ? explode("\n", $res) : [];
+			$blocked	= false;
+			$bcount		= 0;
+			$process	= 0;
+			$cwd		= false;
 
 			$return = "";
 
@@ -92,17 +109,22 @@ switch ($_POST['action']) {
 			$bb="";
 			if ((isset($pnum)) && ($pnum)) {
 				foreach ($pnum as $pp) {
-					$ss			= $flist[$pnum[$pp]][0];
 					$bb			= "<input class='tooltip' title='"._('Enable Kill Button').".' type='checkbox' onclick='$(\"#kill_button{$pnum[$pp]}\").prop(\"disabled\",!this.checked);'>";
-					$bb			.= "<button class='kill-button tooltip' title='"._('Kill this Process holding files open').".' id='kill_button{$pnum[$pp]}' disabled onclick='openBox(\"/plugins/open.files/scripts/killprocess&arg1={$pnum[$pp]}\",\"Kill Process\",450,450,true)'>"._('Kill')."</button>";
-					$return		.= "<tr><td>$prog[$pp]</td><td>$pnum[$pp]</td><td>$bb</td><td>$count[$pp]</td><td>$blocking[$pp]</td>";
+					$start_time = get_process_start_time((int)$pnum[$pp]);
+					$bb			.= "<button class='kill-button tooltip' title='"._('Kill this Process holding files open').".' id='kill_button{$pnum[$pp]}' disabled onclick='openBox(\"/plugins/open.files/scripts/killprocess.php&arg1={$pnum[$pp]}&arg2={$start_time}\",\"Kill Process\",450,450,true)'>"._('Kill')."</button>";
+					/* Escape process names before inserting them into HTML. */
+					$name = htmlspecialchars($prog[$pp], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+					$return		.= "<tr><td>$name</td><td>$pnum[$pp]</td><td>$bb</td><td>$count[$pp]</td><td>$blocking[$pp]</td>";
 
 					$truncate	= 80;
 					$trim		= 40;
 					$return		.= "<td>";
 					foreach($flist[$pnum[$pp]] as $pname) {
 						if (strlen($pname) > $truncate) {
-							$pname =substr($pname, 0, $trim)."<strong>...</strong>".substr($pname, strlen($pname)-($truncate-$trim));
+							/* Escape filename segments while preserving the ellipsis markup. */
+							$pname = htmlspecialchars(substr($pname, 0, $trim), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."<strong>...</strong>".htmlspecialchars(substr($pname, -($truncate-$trim)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+						} else {
+							$pname = htmlspecialchars($pname, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 						}
 						$return .= "$pname<br />";
 					}
